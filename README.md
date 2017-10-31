@@ -1,2 +1,2 @@
-# GDPAssignment
+# GDP Assignment
 GDP Coding Exercise
