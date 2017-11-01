@@ -12,11 +12,6 @@ var mongoose = require('mongoose');
 // Define our product schema
 var ProductSchema = new mongoose.Schema({
     
-    _id: {
-        type: String,
-        required: true
-    },
-
     name: {
         type: String,
         unique: true,

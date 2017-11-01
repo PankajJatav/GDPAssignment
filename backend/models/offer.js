@@ -11,11 +11,6 @@ var mongoose = require('mongoose');
 
 // Define our offer schema
 var OfferSchema = new mongoose.Schema({
-    
-    _id: {
-        type: String,
-        required: true
-    },
 
     name: {
         type: String,

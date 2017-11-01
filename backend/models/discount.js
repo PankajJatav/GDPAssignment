@@ -12,11 +12,6 @@ var mongoose = require('mongoose');
 // Define our discount schema
 var DiscountSchema = new mongoose.Schema({
     
-    _id: {
-        type: String,
-        required: true
-    },
-
     user_id: {
         type: String,
         required: true

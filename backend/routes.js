@@ -5,16 +5,39 @@
  * JavaScript file routes.js
  * *************************************************************** */
 
-
+var productController = require("./controllers/product");
 module.exports = function(app, apiRoutes) {
 
     /**
-      ====================== User Routes Start =========================== 
+      ====================== Product Routes Start =========================== 
     */
-        
+        // Route to careate new product    
+        apiRoutes.post('/product', function(req, res) {
+            productController.create(req, res);
+        });
+
+        // Route to fetch all product    
+        apiRoutes.get('/product', function(req, res) {
+            productController.getlist(req, res);
+        });
+
+        // Route to careate new product    
+        apiRoutes.put('/product/:id', function(req, res) {
+            productController.update(req, res);
+        });
+
+        // Route to careate new product    
+        apiRoutes.get('/product/:id', function(req, res) {
+            productController.getById(req, res);
+        });
+
+        // Route to careate new product    
+        apiRoutes.delete('/product/:id', function(req, res) {
+            productController.delete(req, res);
+        });
 
     /**
-      ======================  User Routes End ============================= 
+      ======================  Product Routes End ============================= 
     */
 
     // route to show a random message (GET http://localhost:3000/api/)

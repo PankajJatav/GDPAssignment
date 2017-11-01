@@ -7,6 +7,7 @@
 
 // Bring Mongoose into the app 
 var mongoose = require( 'mongoose' ); 
+mongoose.Promise = global.Promise;
 var mongoConfig = require('../../configs/db.json')['development'];
 
 // Build the connection string 
