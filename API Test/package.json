@@ -1,0 +1,17 @@
+{
+  "name": "api_test",
+  "version": "0.0.1",
+  "description": "moach app for testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha index.js"
+  },
+  "author": "Pankaj Kumar Jatav",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "faker": "^4.1.0",
+    "mocha": "^4.0.1",
+    "request": "^2.83.0"
+  }
+}
