@@ -1,3 +1,10 @@
+/* * ************************************************************ 
+ * Date: 02 Nov, 2017
+ * Programmer: Pankaj Jatav <pankajjatav7777@gmail.com>
+ * Description : This will test the product api end point
+ * Typescript file product.api.test.js
+ * *************************************************************** */
+
 var expect  = require('chai').expect;
 var request = require('request');
 var faker = require("faker");

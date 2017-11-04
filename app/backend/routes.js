@@ -6,6 +6,9 @@
  * *************************************************************** */
 
 var productController = require("./controllers/product");
+var userController = require("./controllers/user");
+var offerController = require("./controllers/offer");
+var discountController = require("./controllers/discount");
 module.exports = function(app, apiRoutes) {
 
     /**
@@ -39,6 +42,105 @@ module.exports = function(app, apiRoutes) {
     /**
       ======================  Product Routes End ============================= 
     */
+
+    /**
+      ====================== User Routes Start =========================== 
+    */
+        // Route to careate new user    
+        apiRoutes.post('/user', function(req, res) {
+            userController.create(req, res);
+        });
+
+        // Route to fetch all user    
+        apiRoutes.get('/user', function(req, res) {
+            userController.getlist(req, res);
+        });
+
+        // Route to careate new user    
+        apiRoutes.put('/user/:id', function(req, res) {
+            userController.update(req, res);
+        });
+
+        // Route to careate new user    
+        apiRoutes.get('/user/:id', function(req, res) {
+            userController.getById(req, res);
+        });
+
+        // Route to careate new user    
+        apiRoutes.delete('/user/:id', function(req, res) {
+            userController.delete(req, res);
+        });
+
+    /**
+      ======================  User Routes End ============================= 
+    */
+
+
+    /**
+      ====================== Offer Routes Start =========================== 
+    */
+        // Route to careate new offer    
+        apiRoutes.post('/offer', function(req, res) {
+            offerController.create(req, res);
+        });
+
+        // Route to fetch all offer    
+        apiRoutes.get('/offer', function(req, res) {
+            offerController.getlist(req, res);
+        });
+
+        // Route to careate new offer    
+        apiRoutes.put('/offer/:id', function(req, res) {
+            offerController.update(req, res);
+        });
+
+        // Route to careate new offer    
+        apiRoutes.get('/offer/:id', function(req, res) {
+            offerController.getById(req, res);
+        });
+
+        // Route to careate new offer    
+        apiRoutes.delete('/offer/:id', function(req, res) {
+            offerController.delete(req, res);
+        });
+
+    /**
+      ======================  Offer Routes End ============================= 
+    */
+
+
+    /**
+      ====================== Discount Routes Start =========================== 
+    */
+        // Route to careate new discount    
+        apiRoutes.post('/discount', function(req, res) {
+            discountController.create(req, res);
+        });
+
+        // Route to fetch all discount    
+        apiRoutes.get('/discount', function(req, res) {
+            discountController.getlist(req, res);
+        });
+
+        // Route to careate new discount    
+        apiRoutes.put('/discount/:id', function(req, res) {
+            discountController.update(req, res);
+        });
+
+        // Route to careate new discount    
+        apiRoutes.get('/discount/:id', function(req, res) {
+            discountController.getById(req, res);
+        });
+
+        // Route to careate new discount    
+        apiRoutes.delete('/discount/:id', function(req, res) {
+            discountController.delete(req, res);
+        });
+
+    /**
+      ======================  Discount Routes End ============================= 
+    */
+
 
     // route to show a random message (GET http://localhost:3000/api/)
     apiRoutes.get('/', function(req, res) {

@@ -13,16 +13,23 @@ var mongoose = require('mongoose');
 var DiscountSchema = new mongoose.Schema({
     
     user_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
 
-    offer_code: {
-        type: String,
+    offer_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Offer',
         required: true
     },
     
     is_active: {
+        type: Boolean,
+        required: true
+    },
+
+    is_expire: {
         type: Boolean,
         required: true
     },
@@ -45,8 +52,10 @@ DiscountSchema.pre('save', function(next){
   now = new Date();
   this.updated_at = now;
   if ( !this.created_at ) {
-    this.created_at = now;
-    this._id = this._id.toString();
+        this.is_expire = false;
+        this.is_active = true;
+        this.created_at = now;
+        this._id = this._id.toString();
   }
   next();
 });

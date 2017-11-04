@@ -20,7 +20,14 @@ module.exports = class BaseController {
     * @return  json object
     */
     getlist(req, res) {
-        var moduleName = this.module;
+        //Check model is missing or not
+        if(!this.model){
+            res.json({ 
+                code: codes.FOEBIDDEN,
+                message: messages.MODEL__REQUIRED,
+            });
+            return;
+        }
         //Query the DB and if no errors, send all the docs
         let query = this.model.find({});
         query.exec((err, docs) => {
@@ -48,6 +55,14 @@ module.exports = class BaseController {
     * @return  json object
     */
     create(req, res) {
+        //Check model is missing or not
+        if(!this.model){
+            res.json({ 
+                code: codes.FOEBIDDEN,
+                message: messages.MODEL__REQUIRED,
+            });
+            return;
+        }
         //Creates a new doc
         var newDoc = new this.model(req.body);
         //Save it into the DB.
@@ -78,6 +93,15 @@ module.exports = class BaseController {
     * @return  json object
     */
     getById(req, res) {
+        //Check model is missing or not
+        if(!this.model){
+            res.json({ 
+                code: codes.FOEBIDDEN,
+                message: messages.MODEL__REQUIRED,
+            });
+            return;
+        }
+        // Check user send Id or not
         if(!req.params.id){
             res.json({ 
                 code: codes.FOEBIDDEN,
@@ -112,6 +136,15 @@ module.exports = class BaseController {
     * @return  json object
     */
     delete(req, res) {
+        //Check model is missing or not
+        if(!this.model){
+            res.json({ 
+                code: codes.FOEBIDDEN,
+                message: messages.MODEL__REQUIRED,
+            });
+            return;
+        }
+        // Check user send Id or not
         if(!req.params.id){
             res.json({ 
                 code: codes.FOEBIDDEN,
@@ -146,6 +179,15 @@ module.exports = class BaseController {
     * @return  json object
     */
     update(req, res) {
+        //Check model is missing or not
+        if(!this.model){
+            res.json({ 
+                code: codes.FOEBIDDEN,
+                message: messages.MODEL__REQUIRED,
+            });
+            return;
+        }
+        // Check user send Id or not
         if(!req.params.id) {
             res.json({
                 code: codes.FOEBIDDEN,
@@ -182,5 +224,4 @@ module.exports = class BaseController {
             }); 
         });
     }
-
 }

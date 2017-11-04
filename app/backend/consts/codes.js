@@ -1,3 +1,10 @@
+/* * ************************************************************ 
+ * Date: 02 Nov, 2017
+ * Programmer: Pankaj Jatav <pankajjatav7777@gmail.com>
+ * Description : Codes for our app
+ * Typescript file codes.js
+ * *************************************************************** */
+
 module.exports = {
 	SUCCESS : 200,
 	CREATED : 201,

@@ -8,17 +8,27 @@
 
 // Load required packages
 var mongoose = require('mongoose');
+const discountType = { 
+    FREE: "Free Goods" ,
+    DISCOUNT: "discount"
+};
+
+DiscountType = {
+    PRICE: "Price Discount",
+    PERCENT: "Percent Discount",
+    GOODS: "Free Goods"
+}
 
 // Define our offer schema
 var OfferSchema = new mongoose.Schema({
 
-    name: {
-        type: String,
-        unique: true,
+    product_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
         required: true
     },
 
-    code: {
+    name: {
         type: String,
         unique: true,
         required: true
@@ -26,11 +36,22 @@ var OfferSchema = new mongoose.Schema({
     
     type: {
         type: String,
-        unique: true,
+        enum: Object.keys(discountType),
         required: true
     },
 
-    amount: {
+    code: {
+        type: String,
+        enum: Object.keys(DiscountType),
+        required: true
+    },
+
+    offer_amount: {
+        type: Number,
+        required: true
+    },
+
+    quantity: {
         type: Number,
         required: true
     },

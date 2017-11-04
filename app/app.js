@@ -9,8 +9,16 @@
 var express = require('express');
 var morgan = require('morgan'); // logger
 var bodyParser = require('body-parser');
-var mongoose = require('./backend/models');
-var config = require('./configs/server')['development'];
+var mongoose = require( 'mongoose' ); 
+mongoose.Promise = global.Promise;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+var config = require('./configs/server')[NODE_ENV];
+
+
+var mongoConfig = require('./configs/db.json')[NODE_ENV];
+var dbURI = 'mongodb://'+mongoConfig.host+':'+ mongoConfig.port +'/'+ mongoConfig.database; 
+
+
 var app = express();
 
 app.set('port', (process.env.PORT || config.port));
@@ -44,13 +52,31 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use(morgan('dev'));
+// Don't show log for test envirment
+if(NODE_ENV !== 'test') {
+    app.use(morgan('dev'));   
+}
+
 app.disable('etag');
 
 var routes = require("./backend/routes")(app, apiRoutes);
 
-app.listen(app.get('port'), function() {
-    console.log('MERN App listening on port ' + app.get('port'));
+mongoose.connect(dbURI); 
+
+mongoose.connection.on('connected', function () {  
+  console.log('Mongoose default connection open to ' + dbURI);
+  app.listen(app.get('port'), function() {
+        console.log('MERN App listening on port ' + app.get('port'));
+    });
 });
+
+mongoose.connection.on('error',function (err) {  
+  console.log('Mongoose default connection error: ' + err);
+});
+
+mongoose.connection.on('disconnected', function () {  
+  console.log('Mongoose default connection disconnected'); 
+});
+
 
 module.exports = app;
