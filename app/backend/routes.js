@@ -24,17 +24,17 @@ module.exports = function(app, apiRoutes) {
             productController.getlist(req, res);
         });
 
-        // Route to careate new product    
+        // Route to update product by Id
         apiRoutes.put('/product/:id', function(req, res) {
             productController.update(req, res);
         });
 
-        // Route to careate new product    
+        // Route to get product by Id    
         apiRoutes.get('/product/:id', function(req, res) {
             productController.getById(req, res);
         });
 
-        // Route to careate new product    
+        // Route to update product by Id 
         apiRoutes.delete('/product/:id', function(req, res) {
             productController.delete(req, res);
         });
@@ -56,17 +56,22 @@ module.exports = function(app, apiRoutes) {
             userController.getlist(req, res);
         });
 
-        // Route to careate new user    
+        // Route to get usr bill
+        apiRoutes.post('/user/bill', function(req, res) {
+            userController.getBill(req, res);
+        });
+
+        // Route to update user by Id
         apiRoutes.put('/user/:id', function(req, res) {
             userController.update(req, res);
         });
 
-        // Route to careate new user    
+        // Route to get user by Id    
         apiRoutes.get('/user/:id', function(req, res) {
             userController.getById(req, res);
         });
 
-        // Route to careate new user    
+        // Route to delete user by Id 
         apiRoutes.delete('/user/:id', function(req, res) {
             userController.delete(req, res);
         });
@@ -89,17 +94,17 @@ module.exports = function(app, apiRoutes) {
             offerController.getlist(req, res);
         });
 
-        // Route to careate new offer    
+        // Route to update offer by Id
         apiRoutes.put('/offer/:id', function(req, res) {
             offerController.update(req, res);
         });
 
-        // Route to careate new offer    
+        // Route to get offer by Id  
         apiRoutes.get('/offer/:id', function(req, res) {
             offerController.getById(req, res);
         });
 
-        // Route to careate new offer    
+        // Route to delete offer by Id
         apiRoutes.delete('/offer/:id', function(req, res) {
             offerController.delete(req, res);
         });
@@ -122,17 +127,17 @@ module.exports = function(app, apiRoutes) {
             discountController.getlist(req, res);
         });
 
-        // Route to careate new discount    
+        // Route to update discount by Id
         apiRoutes.put('/discount/:id', function(req, res) {
             discountController.update(req, res);
         });
 
-        // Route to careate new discount    
+        // Route to get discount by Id
         apiRoutes.get('/discount/:id', function(req, res) {
             discountController.getById(req, res);
         });
 
-        // Route to careate new discount    
+        // Route to delete discount by Id
         apiRoutes.delete('/discount/:id', function(req, res) {
             discountController.delete(req, res);
         });

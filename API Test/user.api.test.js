@@ -1,8 +1,8 @@
 /* * ************************************************************ 
- * Date: 02 Nov, 2017
+ * Date: 06 Nov, 2017
  * Programmer: Pankaj Jatav <pankajjatav7777@gmail.com>
- * Description : This will test the product api end point
- * Typescript file product.api.test.js
+ * Description : This will test the user api end point
+ * Typescript file user.api.test.js
  * *************************************************************** */
 
 var expect  = require('chai').expect;
@@ -10,11 +10,11 @@ var request = require('request');
 var faker = require("faker");
 var ServerURL = "http://localhost:3001/api";
 
-describe('GET /api/product', () => {
-    it('Get Product List', (done) => {
+describe('GET /api/user', () => {
+    it('Get User List', (done) => {
         let options = {
             method: 'GET',
-            uri: ServerURL+"/product"
+            uri: ServerURL+"/user"
         }
         request(options , (error, response, body) => {
             let info = JSON.parse(body);
@@ -24,14 +24,12 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Create New Product', (done) => {
+    it('Create New User', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "username": faker.name.findName()
             }
         }
         request(postData , (error, response, body) => {
@@ -41,13 +39,12 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Create Invalid Product', (done) => {
+    it('Create Invalid User', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "price": faker.commerce.price()
+                "username": {key:"!@#$%^&*()"}
             }
         }
         request(postData , (error, response, body) => {
@@ -57,15 +54,13 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Update Product', (done) => {
+    it('Update User', (done) => {
         
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "username": faker.name.findName()
             }
         }
         request(postData , (error, response, body) => {
@@ -73,10 +68,9 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let putData = {
                 method: "PUT",
-                uri: ServerURL+"/product/"+body.data._id,
+                uri: ServerURL+"/user/"+body.data._id,
                 json: {
-                    "code": faker.random.uuid(6),
-                    "name": faker.commerce.productName()
+                    "username": faker.name.findName()
                 }
             }
             request(putData , (error, response, updatedbody) => {
@@ -90,15 +84,13 @@ describe('GET /api/product', () => {
     });
 
 
-    it('Update Invalid Product', (done) => {
+    it('Update Invalid User', (done) => {
         
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "username": faker.name.findName()
             }
         }
         request(postData , (error, response, body) => {
@@ -106,10 +98,9 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let putData = {
                 method: "PUT",
-                uri: ServerURL+"/product/"+body.data._id + faker.random.uuid(6),
+                uri: ServerURL+"/user/"+body.data._id + faker.random.uuid(6),
                 json: {
-                    "code": faker.random.uuid(6),
-                    "name": faker.commerce.productName()
+                    "username": faker.name.findName()
                 }
             }
             request(putData , (error, response, updatedbody) => {
@@ -121,14 +112,12 @@ describe('GET /api/product', () => {
     });
 
 
-    it('Delete Product', (done) => {
+    it('Delete User', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "username": faker.name.findName()
             }
         }
         request(postData , (error, response, body) => {
@@ -136,7 +125,7 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let deleteData = {
                 method: "DELETE",
-                uri: ServerURL+"/product/"+body.data._id,
+                uri: ServerURL+"/user/"+body.data._id,
             }
             request(deleteData , (error, response, delBody) => {
                 let info = JSON.parse(delBody);
@@ -146,14 +135,12 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Delete Invalid Product', (done) => {
+    it('Delete Invalid User', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/user",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "username": faker.name.findName()
             }
         }
         request(postData , (error, response, body) => {
@@ -161,13 +148,43 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let deleteData = {
                 method: "DELETE",
-                uri: ServerURL+"/product/"+body.data._id + faker.commerce.price(),
+                uri: ServerURL+"/user/"+body.data._id + faker.commerce.price(),
             }
             request(deleteData , (error, response, delBody) => {
                 let info = JSON.parse(delBody);
                expect(info.code).to.equal(403);
                 done();
             });
+        });
+    });
+
+    it('Get User Bill', (done) => {
+        let postData = {
+            method: 'POST',
+            uri: ServerURL+"/user/bill",
+            json: {
+                "username": "ford",
+                "products": ["classic", "standout", "premium"]
+            }
+        }
+        request(postData , (error, response, body) => {
+            expect(body.code).to.equal(200);
+            expect(body.data).to.be.an('object');
+            done(); 
+        });
+    });
+
+    it('Get User Bill Without Username', (done) => {
+        let postData = {
+            method: 'POST',
+            uri: ServerURL+"/user/bill",
+            json: {
+                "products": ["classic", "standout", "premium"]
+            }
+        }
+        request(postData , (error, response, body) => {
+            expect(body.code).to.equal(403);
+            done(); 
         });
     });
 

@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 /* *
     This will allow to CORS 
 */
-app.use(function(req, res, next) {
+app.use( (req, res, next) => {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*' );
 
@@ -63,18 +63,26 @@ var routes = require("./backend/routes")(app, apiRoutes);
 
 mongoose.connect(dbURI); 
 
-mongoose.connection.on('connected', function () {  
+mongoose.connection.on('connected', () => {
+  var models = require('./backend/models');
   console.log('Mongoose default connection open to ' + dbURI);
-  app.listen(app.get('port'), function() {
+  models.seed( (err) => {
+    if(err){
+      console.error(err);
+      return;
+    } else {
+      app.listen(app.get('port'), () => {
         console.log('MERN App listening on port ' + app.get('port'));
-    });
+      });
+    }
+  });
 });
 
-mongoose.connection.on('error',function (err) {  
+mongoose.connection.on('error', (err) => {  
   console.log('Mongoose default connection error: ' + err);
 });
 
-mongoose.connection.on('disconnected', function () {  
+mongoose.connection.on('disconnected', () => {  
   console.log('Mongoose default connection disconnected'); 
 });
 

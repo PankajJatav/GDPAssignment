@@ -9,6 +9,8 @@ module.exports = {
 	FIND : "Find Successfully!",
 	ID_REQUIRED: "Doc Id is Required",
 	MODEL__REQUIRED: "Model is Required",
+	USER__REQUIRED: "User is Required",
+	PRODUCT__REQUIRED: "Products are Required",
 	CREATE: "Insert Successfully!",
 	UPDATE: "Update Successfully!",
 	DELETE: "Delete Successfully!",

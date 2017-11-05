@@ -6,6 +6,7 @@
  * *************************************************************** */
 
 let mongoose = require("mongoose");
+var Models = require('./../../backend/models');
 let User = require('./../../backend/models/user');
 //Require the dev-dependencies
 let chai = require('chai');
@@ -286,5 +287,48 @@ describe('Routes:', () => {
             });
         })
 
+        describe('POST /api/user/bill', () => {
+            before((done)=>{
+                Models.seed((err)=>{
+                    if(err){
+                        done(error);
+                        return;
+                    } else{
+                        done();
+                    }
+                });
+            })
+            it("it should give bill", (done) => {
+                let postData = {
+                    "username": "ford",
+                    "products": ["classic", "standout", "premium"]
+                }
+
+                chai.request(server)
+                    .post('/api/user/bill')
+                    .send(postData)
+                    .end( (err, res) => {
+                        let body = res.body;
+                        expect(body.code).to.equal(200);
+                        expect(body.data).to.be.an('object');
+                        done();
+                    });
+            });
+
+            it("it should not give bill when username is missing", (done) => {
+                let postData = {
+                    "products": ["classic", "standout", "premium"]
+                }
+
+                chai.request(server)
+                    .post('/api/user/bill')
+                    .send(postData)
+                    .end( (err, res) => {
+                        let body = res.body;
+                        expect(body.code).to.equal(403);
+                        done();
+                    });
+            })
+        });
     });
 });

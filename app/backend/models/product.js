@@ -52,6 +52,7 @@ ProductSchema.pre('save', function(next){
   now = new Date();
   this.updated_at = now;
   if ( !this.created_at ) {
+    if(typeof this._id == "string")
     this._id = this._id.toString();
     this.created_at = now;
   }

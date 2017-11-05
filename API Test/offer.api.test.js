@@ -1,20 +1,40 @@
 /* * ************************************************************ 
- * Date: 02 Nov, 2017
+ * Date: 06 Nov, 2017
  * Programmer: Pankaj Jatav <pankajjatav7777@gmail.com>
- * Description : This will test the product api end point
- * Typescript file product.api.test.js
+ * Description : This will test the offer api end point
+ * Typescript file offer.api.test.js
  * *************************************************************** */
 
 var expect  = require('chai').expect;
 var request = require('request');
 var faker = require("faker");
 var ServerURL = "http://localhost:3001/api";
+var productId;
 
-describe('GET /api/product', () => {
-    it('Get Product List', (done) => {
+describe('GET /api/offer', () => {
+
+    before((done)=>{
+        let postData = {
+            method: 'POST',
+            uri: ServerURL+"/product",
+            json: {
+                "code": faker.random.uuid(6),
+                "name": faker.commerce.productName(),
+                "price": faker.commerce.price()
+            }
+        }
+        request(postData , (error, response, body) => {
+            expect(body.code).to.equal(201);
+            expect(body.data).to.be.an('object');
+            productId = body.data._id;
+            done();
+        });
+    })  
+
+    it('Get Offer List', (done) => {
         let options = {
             method: 'GET',
-            uri: ServerURL+"/product"
+            uri: ServerURL+"/offer"
         }
         request(options , (error, response, body) => {
             let info = JSON.parse(body);
@@ -24,14 +44,17 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Create New Product', (done) => {
+    it('Create New Offer', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": faker.random.uuid(),
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -41,13 +64,17 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Create Invalid Product', (done) => {
+    it('Create Invalid Offer', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": {key:"Buy 2 Get 50 Percent Off"},
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -57,15 +84,18 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Update Product', (done) => {
+    it('Update Offer', (done) => {
         
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": faker.random.uuid(),
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -73,16 +103,14 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let putData = {
                 method: "PUT",
-                uri: ServerURL+"/product/"+body.data._id,
+                uri: ServerURL+"/offer/"+body.data._id,
                 json: {
-                    "code": faker.random.uuid(6),
-                    "name": faker.commerce.productName()
+                    "name": faker.random.uuid()
                 }
             }
             request(putData , (error, response, updatedbody) => {
                 expect(updatedbody.code).to.equal(200);
                 expect(updatedbody.data).to.be.an('object');
-                expect(updatedbody.data.code).to.equal(putData.json.code);
                 expect(updatedbody.data.name).to.equal(putData.json.name);
                 done();
             });
@@ -90,15 +118,18 @@ describe('GET /api/product', () => {
     });
 
 
-    it('Update Invalid Product', (done) => {
+    it('Update Invalid Offer', (done) => {
         
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": faker.random.uuid(),
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -106,10 +137,9 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let putData = {
                 method: "PUT",
-                uri: ServerURL+"/product/"+body.data._id + faker.random.uuid(6),
+                uri: ServerURL+"/offer/"+body.data._id + faker.random.uuid(6),
                 json: {
-                    "code": faker.random.uuid(6),
-                    "name": faker.commerce.productName()
+                    "name": faker.random.uuid()
                 }
             }
             request(putData , (error, response, updatedbody) => {
@@ -121,14 +151,17 @@ describe('GET /api/product', () => {
     });
 
 
-    it('Delete Product', (done) => {
+    it('Delete Offer', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": faker.random.uuid(),
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -136,7 +169,7 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let deleteData = {
                 method: "DELETE",
-                uri: ServerURL+"/product/"+body.data._id,
+                uri: ServerURL+"/offer/"+body.data._id,
             }
             request(deleteData , (error, response, delBody) => {
                 let info = JSON.parse(delBody);
@@ -146,14 +179,17 @@ describe('GET /api/product', () => {
         });
     });
 
-    it('Delete Invalid Product', (done) => {
+    it('Delete Invalid Offer', (done) => {
         let postData = {
             method: 'POST',
-            uri: ServerURL+"/product",
+            uri: ServerURL+"/offer",
             json: {
-                "code": faker.random.uuid(6),
-                "name": faker.commerce.productName(),
-                "price": faker.commerce.price()
+                "product_id": productId,
+                "name": faker.random.uuid(),
+                "type": "DISCOUNT",
+                "code": "PERCENT",
+                "offer_amount": 50,
+                "quantity": 2
             }
         }
         request(postData , (error, response, body) => {
@@ -161,7 +197,7 @@ describe('GET /api/product', () => {
             expect(body.data).to.be.an('object');
             let deleteData = {
                 method: "DELETE",
-                uri: ServerURL+"/product/"+body.data._id + faker.commerce.price(),
+                uri: ServerURL+"/offer/"+body.data._id + faker.commerce.price(),
             }
             request(deleteData , (error, response, delBody) => {
                 let info = JSON.parse(delBody);
@@ -170,6 +206,18 @@ describe('GET /api/product', () => {
             });
         });
     });
+
+    after((done)=>{
+        let deleteData = {
+            method: "DELETE",
+            uri: ServerURL+"/product/"+ productId
+        }
+        request(deleteData , (error, response, delBody) => {
+            let info = JSON.parse(delBody);
+            expect(info.code).to.equal(200);
+            done();
+        });
+    })  
 
 });
 

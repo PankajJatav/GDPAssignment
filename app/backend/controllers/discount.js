@@ -17,6 +17,7 @@ var BaseController = require('./base');
 
 
 class DiscountController extends BaseController {
+
 	constructor() {
 		super();
 		this.model = Discount;
