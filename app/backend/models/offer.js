@@ -13,7 +13,7 @@ const discountType = {
     DISCOUNT: "discount"
 };
 
-DiscountType = {
+const discountCode = {
     PRICE: "Price Discount",
     PERCENT: "Percent Discount",
     GOODS: "Free Goods"
@@ -42,7 +42,7 @@ var OfferSchema = new mongoose.Schema({
 
     code: {
         type: String,
-        enum: Object.keys(DiscountType),
+        enum: Object.keys(discountCode),
         required: true
     },
 
