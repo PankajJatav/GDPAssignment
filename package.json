@@ -1,0 +1,22 @@
+{
+  "name": "gcd",
+  "version": "0.0.1",
+  "description": "GDP Coding Exercise",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development node app/app.js",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PankajJatav/GDPAssignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PankajJatav/GDPAssignment/issues"
+  },
+  "homepage": "https://github.com/PankajJatav/GDPAssignment#readme"
+}
